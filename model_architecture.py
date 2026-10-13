@@ -106,14 +106,14 @@ class TKARiskModel(BaseEstimator, ClassifierMixin):
             d['heart_disease'] * 2.0 + d['lung_disease'] * 1.5
         )
         
-        # 3. UK Dolan EQ-5D-3L utility tariff (vectorized)
-        eq5d_scores = []
-        for _, row in d.iterrows():
-            eq5d_scores.append(calc_dolan_eq5d_index(
-                row['t0_mobility'], row['t0_self_care'], row['t0_activity'],
-                row['t0_discomfort'], row['t0_anxiety']
-            ))
-        d['calc_eq5d_tariff'] = eq5d_scores
+        # 3. UK Dolan EQ-5D-3L utility tariff (ultra-fast vectorized zip)
+        d['calc_eq5d_tariff'] = [
+            calc_dolan_eq5d_index(m, sc, ua, pd, ad)
+            for m, sc, ua, pd, ad in zip(
+                d['t0_mobility'], d['t0_self_care'], d['t0_activity'],
+                d['t0_discomfort'], d['t0_anxiety']
+            )
+        ]
 
         # 4. Central Sensitization Proxy (Chronic severe rest pain + mental distress)
         d['central_sensitization_risk'] = (

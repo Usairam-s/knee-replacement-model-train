@@ -1,4 +1,9 @@
 import os
+# Force single-threaded inference to prevent OpenMP thread deadlock in container/WSGI environments
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+
 import joblib
 from pathlib import Path
 from flask import Flask, request, jsonify
