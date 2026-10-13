@@ -5,8 +5,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from model_architecture import TKARiskModel
 
-# Load the trained hospital-grade ensemble model
-model = joblib.load("model.pkl")
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+model_path = BASE_DIR / "model.pkl"
+
+# Load the trained hospital-grade ensemble model using absolute path
+model = joblib.load(str(model_path))
 
 # Initialize FastAPI app
 app = FastAPI(
