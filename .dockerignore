@@ -1,0 +1,10 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.git
+.gitignore
+data/
+train.py
+test_model.py
+tka-risk-predictor/
