@@ -1,9 +1,10 @@
 pandas
 scikit-learn
 joblib
+lightgbm
+xgboost
+flask
+flask-cors
 fastapi
 uvicorn
 python-multipart
-lightgbm
-xgboost
-a2wsgi

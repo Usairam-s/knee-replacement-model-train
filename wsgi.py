@@ -7,8 +7,5 @@ if project_home not in sys.path:
     sys.path.insert(0, project_home)
 os.chdir(project_home)
 
-from a2wsgi import ASGIMiddleware
-from main import app
-
-# PythonAnywhere expects a WSGI callable named 'application'
-application = ASGIMiddleware(app)
+# Native WSGI Flask Application (instant 20ms response on PythonAnywhere)
+from flask_app import app as application

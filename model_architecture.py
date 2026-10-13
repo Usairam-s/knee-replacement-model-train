@@ -79,9 +79,13 @@ class TKARiskModel(BaseEstimator, ClassifierMixin):
         if not isinstance(X, pd.DataFrame):
             X = pd.DataFrame(X, columns=self.base_features)
         
-        d = X.copy()
+        # Build DataFrame with guaranteed canonical column ordering
+        d = pd.DataFrame(index=X.index)
         for col in self.base_features:
-            d[col] = pd.to_numeric(d[col], errors='coerce').fillna(0)
+            if col in X.columns:
+                d[col] = pd.to_numeric(X[col], errors='coerce').fillna(0.0)
+            else:
+                d[col] = 0.0
 
         # 1. Oxford Knee Score Pain vs Functional Subscales
         d['oks_pain_sum'] = d['oks_t0_pain'] + d['oks_t0_night_pain']
